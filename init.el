@@ -49,9 +49,6 @@
   :ensure t
   :config (which-key-mode))
 
-(unless (package-installed-p 'racket-mode)
-  (package-install 'racket-mode))
-
 (setq inhibit-startup-message t)
 
 (tool-bar-mode -1)
@@ -329,6 +326,12 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
+;; Racket Stuff
+
+(unless (package-installed-p 'racket-mode)
+  (package-install 'racket-mode))
+
+(add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
 
 ;; Paredit stuff
 
