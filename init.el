@@ -263,6 +263,12 @@ point reaches the beginning or end of the buffer, stop there."
 
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
 
+;; on mac, after installing DrRacket gui, add
+;; /sbin:/Applications/Racket v7.4/bin
+;; to /etc/paths.d/racket
+;; Note: Autocomplete adds an extra backslash escape character
+;; +/sbin:/Applications/Racket\ v7.4/bin+
+
 ;; Paredit stuff
 
 (unless (package-installed-p 'paredit)
