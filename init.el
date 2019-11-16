@@ -269,6 +269,15 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Note: Autocomplete adds an extra backslash escape character
 ;; +/sbin:/Applications/Racket\ v7.4/bin+
 
+	
+;; Common Lisp Stuff
+
+;; $ brew install roswell
+;; $ ros install slime
+(load (expand-file-name "~/.roswell/helper.el"))
+;; from a .lisp buffer, `M-x slime`
+
+
 ;; Paredit stuff
 
 (unless (package-installed-p 'paredit)
