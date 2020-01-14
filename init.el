@@ -23,6 +23,14 @@
 
 (super-save-mode +1)
 
+;; Project Management. By bbatsov
+(unless (package-installed-p 'projectile)
+  (package-refresh-contents)
+  (package-install 'projectile))
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+
 
 ;; see https://indium.readthedocs.io/en/latest/installation.html
 ;; (unless (package-installed-p 'indium)
@@ -59,6 +67,8 @@
 ;; (require 'indium)
 
 
+(unless (package-installed-p 'web-mode)
+  (package-install 'web-mode))
 
 ;; auto-enable for .js/.jsx files, see:
 ;; https://gist.github.com/CodyReichert/9dbc8bd2a104780b64891d8736682cea
@@ -167,10 +177,10 @@ point reaches the beginning or end of the buffer, stop there."
  '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
  '(custom-safe-themes
    (quote
-    ("06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "d9e811d5a12dec79289c5bacaecd8ae393d168e9a92a659542c2a9bab6102041" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "d9e811d5a12dec79289c5bacaecd8ae393d168e9a92a659542c2a9bab6102041" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (moe-theme highlight-indent-guides web-mode magit super-save paredit smooth-scrolling racket-mode rainbow-mode avy rainbow-delimiters counsel ivy swiper ido-vertical-mode csharp-mode browse-kill-ring which-key use-package try solarized-theme indium exec-path-from-shell color-theme-sanityinc-tomorrow color-theme-modern))))
+    (zenburn-theme projectile moe-theme highlight-indent-guides web-mode magit super-save paredit smooth-scrolling racket-mode rainbow-mode avy rainbow-delimiters counsel ivy swiper ido-vertical-mode csharp-mode browse-kill-ring which-key use-package try solarized-theme indium exec-path-from-shell color-theme-sanityinc-tomorrow color-theme-modern))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -178,12 +188,21 @@ point reaches the beginning or end of the buffer, stop there."
  ;; If there is more than one, they won't work right.
  )
 
+;; emacs prelude's default
+(unless (package-installed-p 'zenburn-theme)
+  (package-install 'zenburn-theme))
+
+(load-theme 'zenburn t)
+
+;; neon
 (unless (package-installed-p 'moe-theme)
   (package-install 'moe-theme))
 
 (require 'moe-theme)
-(moe-light)
 
+;;(moe-light)
+
+;; vim golf from emacs casts
 (unless (package-installed-p 'solarized-theme)
   (package-install 'solarized-theme))
 
@@ -197,11 +216,12 @@ point reaches the beginning or end of the buffer, stop there."
 (unless (package-installed-p 'color-theme-sanityinc-tomorrow)
   (package-install 'color-theme-sanityinc-tomorrow))
 
-;; M-x color-theme-sanityinc-tomorrow-day
-;; M-x color-theme-sanityinc-tomorrow-night
-;; M-x color-theme-sanityinc-tomorrow-blue
-;; M-x color-theme-sanityinc-tomorrow-bright
-;; M-x color-theme-sanityinc-tomorrow-eighties
+
+;; (color-theme-sanityinc-tomorrow-day)
+;; (color-theme-sanityinc-tomorrow-night)
+;; (color-theme-sanityinc-tomorrow-blue)
+;; (color-theme-sanityinc-tomorrow-bright)
+(color-theme-sanityinc-tomorrow-eighties)
 
 ;; https://oremacs.com/swiper/
 (unless (package-installed-p 'swiper)
@@ -254,6 +274,9 @@ point reaches the beginning or end of the buffer, stop there."
 (setq suggest-key-bindings nil)
 
 ;; Magit
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
+
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; Racket Stuff
@@ -274,7 +297,10 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; $ brew install roswell
 ;; $ ros install slime
-(load (expand-file-name "~/.roswell/helper.el"))
+;; mac
+;; (load (expand-file-name "~/.roswell/helper.el"))
+;; TODO: Ubuntu
+
 ;; from a .lisp buffer, `M-x slime`
 
 
