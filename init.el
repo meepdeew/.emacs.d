@@ -221,7 +221,7 @@ point reaches the beginning or end of the buffer, stop there."
 ;; (color-theme-sanityinc-tomorrow-night)
 ;; (color-theme-sanityinc-tomorrow-blue)
 ;; (color-theme-sanityinc-tomorrow-bright)
-(color-theme-sanityinc-tomorrow-eighties)
+;; (color-theme-sanityinc-tomorrow-eighties)
 
 ;; https://oremacs.com/swiper/
 (unless (package-installed-p 'swiper)
