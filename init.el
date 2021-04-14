@@ -14,42 +14,49 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-(set-fringe-mode 0)
-(menu-bar-mode -1)
+(use-package emacs
+  :config
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1)
+  (tooltip-mode -1)
+  (set-fringe-mode 0)
+  (menu-bar-mode -1)
+  ;; stop creating those backup~ files
+  (setq make-backup-files nil)
+  ;; stop creating those #auto-save# files
+  (setq auto-save-default nil)
+  ;; https://ember-cli.com/user-guide/#emacs but create-react-app watcher
+  (setq create-lockfiles nil)
+  ;; When a file is updated outside emacs, make it
+  ;; update if it's already opened in emacs
+  (global-auto-revert-mode 1)
+  ;; turn on bracket match highlight
+  (show-paren-mode 1)
+  ;; show cursor position within line
+  (column-number-mode 1)
+  ;; y or n is enough
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  ;; wrap long lines by word boundary,
+  ;; and arrow up/down move by visual line, etc
+  ;; options are visual-line-mode vs. toggle-truncate-lines
+  ;; (global-visual-line-mode t)
+  (setq-default word-wrap t)
+  ;; turn on highlighting current line
+  (global-hl-line-mode 1)
+  ;; make cursor movement stop in between camelCase words.
+  (global-subword-mode 1)
+  ;; make typing delete/overwrite current region/selected text.
+  (delete-selection-mode 1)
+  ;; Logging
+  ;; (setq eval-expression-print-level nil)
+  ;; (setq eval-expression-print-length nil)
 
-;; stop creating those backup~ files
-(setq make-backup-files nil)
-
-;; stop creating those #auto-save# files
-(setq auto-save-default nil)
-
-;; https://ember-cli.com/user-guide/#emacs but create-react-app watcher
-(setq create-lockfiles nil)
-
-;; When a file is updated outside emacs, make it
-;; update if it's already opened in emacs
-(global-auto-revert-mode 1)
-
-;; turn on bracket match highlight
-(show-paren-mode 1)
-
-;; show cursor position within line
-(column-number-mode 1)
-
-;; y or n is enough
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; wrap long lines by word boundary, and arrow up/down move by visual line, etc
-;; options are visual-line-mode vs. toggle-truncate-lines
-;; (global-visual-line-mode t)
-(setq-default word-wrap t)
+  )
 
 ;; Line Numbers
 (global-display-line-numbers-mode)
+
 ;; (dolist (mode '(org-mode-hook
 ;; 		shell-mode-hook
 ;; 		;; TODO: More
@@ -102,16 +109,23 @@ point reaches the beginning or end of the buffer, stop there."
 ;; no beep on scroll
 ;; https://stackoverflow.com/questions/11679700/emacs-disable-beep-when-trying-to-move-beyond-the-end-of-the-document#answer-11679758
 (defun my-bell-function ()
-  (unless (memq this-command
-        '(isearch-abort abort-recursive-edit exit-minibuffer
-              keyboard-quit mwheel-scroll down up next-line previous-line
-              backward-char forward-char))
+  (unless
+      (memq this-command
+	    '(isearch-abort abort-recursive-edit exit-minibuffer
+			    keyboard-quit mwheel-scroll
+			    down up
+			    next-line previous-line
+			    backward-char forward-char))
     (ding)))
 
 (setq ring-bell-function 'my-bell-function)
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
-;; rainbow-delimiters
+;; Rainbow Delimiters
 (use-package rainbow-delimiters
   :hook
   (prog-mode . rainbow-delimiters-mode))
@@ -119,10 +133,7 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
-  :config (setq which-key-idle-delay 0.3)
-  )
-  
-(find-file "~/.emacs.d/init.el")
+  :config (setq which-key-idle-delay 0.3))
 
 ;; Swiper
 (use-package swiper :diminish)
@@ -178,13 +189,20 @@ point reaches the beginning or end of the buffer, stop there."
   :init (doom-modeline-mode 1))
 
 (use-package doom-themes
-  :init (load-theme 'doom-gruvbox t))
+  :init (load-theme 'doom-gruvbox t)
+  ;; :init (load-theme 'doom-solarized-light t)
+  )
 
 (use-package racket-mode
   :mode ("\\.rkt\\'" . racket-mode)
   :hook (racket-mode . racket-xp-mode)
   :config
-  (setq racket-show-functions '(racket-show-echo-area)))
+  (setq racket-show-functions '(racket-show-echo-area))
+  ;; `setq-local' does not set the var in racket-mode
+  ;; (setq-local font-lock-maximum-decoration 2)
+  ;; `setq' does, for whatever reason, make it into the major-mode
+  ;; but neither affects init.el's `font-lock-maximum-decoration'
+  (setq font-lock-maximum-decoration 2))
 
 ;; Paredit
 
@@ -204,10 +222,12 @@ point reaches the beginning or end of the buffer, stop there."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(racket-xp-mode racket-xp racket-mode doom-themes helpful ivy-rich which-key rainbow-delimiters doom-modeline counsel swiper ivy use-package)))
+   '(exec-path-from-shell racket-xp-mode racket-xp racket-mode doom-themes helpful ivy-rich which-key rainbow-delimiters doom-modeline counsel swiper ivy use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(find-file "~/.emacs.d/init.el")

@@ -43,11 +43,11 @@
 ;;   (package-install 'indium))
 
 ;; https://github.com/purcell/exec-path-from-shell
-(unless (package-installed-p 'exec-path-from-shell)
-  (package-install 'exec-path-from-shell))
+;; (unless (package-installed-p 'exec-path-from-shell)
+;;   (package-install 'exec-path-from-shell))
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+;; (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
 
 (unless (package-installed-p 'try)
   (package-install 'try))
@@ -55,12 +55,12 @@
 (use-package try
   :ensure t)
 
-(unless (package-installed-p 'which-key)
-  (package-install 'which-key))
+;; (unless (package-installed-p 'which-key)
+;;   (package-install 'which-key))
 
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
+;; (use-package which-key
+;;   :ensure t
+;;   :config (which-key-mode))
 
 ;; (setq inhibit-startup-message t)
 
@@ -71,9 +71,9 @@
 ;; (add-to-list 'load-path "~/projects/indium")
 ;; (require 'indium)
 
-(unless (package-installed-p 'tide)
-  (package-refresh-contents)
-  (package-install 'tide))
+;; (unless (package-installed-p 'tide)
+;;   (package-refresh-contents)
+;;   (package-install 'tide))
 
 (unless (package-installed-p 'flycheck)
   (package-refresh-contents)
@@ -163,13 +163,13 @@
 ;; (add-to-list 'default-frame-alist '(background-color . "honeydew"))
 
 ;; turn on highlighting current line
-(global-hl-line-mode 1)
+;; (global-hl-line-mode 1)
 
-;; make cursor movement stop in between camelCase words.
-(global-subword-mode 1)
+;; ;; make cursor movement stop in between camelCase words.
+;; (global-subword-mode 1)
 
-;; make typing delete/overwrite selected text.
-(delete-selection-mode 1)
+;; ;; make typing delete/overwrite selected text.
+;; (delete-selection-mode 1)
 
 ;; turn on bracket match highlight
 ;; (show-paren-mode 1)
@@ -399,8 +399,8 @@
 ;;  (a (b (c (d ...))))
 ;; eval-expression-print-length ; 12
 
-(setq eval-expression-print-level nil)
-(setq eval-expression-print-length nil)
+;; (setq eval-expression-print-level nil)
+;; (setq eval-expression-print-length nil)
 
 ;;(split-window-below)
 
@@ -532,17 +532,20 @@
 ;; (color-theme-sanityinc-tomorrow-eighties)
 
 ;; https://oremacs.com/swiper/
-(unless (package-installed-p 'swiper)
-  (package-install 'swiper))
-(unless (package-installed-p 'ivy)
-  (package-install 'ivy))
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq ivy-count-fromat "(%d/%d) ")
-(setq ivy-wrap t)
 
-(global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
+;; (unless (package-installed-p 'swiper)
+;;   (package-install 'swiper))
+
+;; (unless (package-installed-p 'ivy)
+;;   (package-install 'ivy))
+
+;; (ivy-mode 1)
+;; (setq ivy-use-virtual-buffers t)
+;; (setq ivy-count-fromat "(%d/%d) ")
+;; (setq ivy-wrap t)
+
+;; (global-set-key (kbd "C-s") 'swiper)
+;; (global-set-key (kbd "C-c C-r") 'ivy-resume)
 
 ;; better buffer list
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -553,23 +556,23 @@
   :bind ("M-s" . avy-goto-char))
 
 ;;
-(unless (package-installed-p 'rainbow-delimiters)
-  (package-install 'rainbow-delimiters))
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+;; (unless (package-installed-p 'rainbow-delimiters)
+;;   (package-install 'rainbow-delimiters))
+;; (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 
 ;;
-(defun fc-eval-and-replace ()
-  "Replace the preceding sexp with its value."
-  (interactive)
-  (backward-kill-sexp)
-  (condition-case nil
-      (prin1 (eval (read (current-kill 0)))
-             (current-buffer))
-    (error (message "Invalid expression")
-           (insert (current-kill 0)))))
+;; (defun fc-eval-and-replace ()
+;;   "Replace the preceding sexp with its value."
+;;   (interactive)
+;;   (backward-kill-sexp)
+;;   (condition-case nil
+;;       (prin1 (eval (read (current-kill 0)))
+;;              (current-buffer))
+;;     (error (message "Invalid expression")
+;;            (insert (current-kill 0)))))
 
-(global-set-key (kbd "C-c e") 'fc-eval-and-replace)
+;; (global-set-key (kbd "C-c e") 'fc-eval-and-replace)
 
 
 ;; Smoother scrolling (didn't like smooth-scrolling package)
